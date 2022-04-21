@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="moderationPane" prefHeight="720.0" prefWidth="1084.0" style="-fx-background-color: #FFFEFB; -fx-background-radius: 1em;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commentaire.CommentaireListPageController">
+   <children>
+      <FontAwesomeIconView fx:id="close" fill="#e91a37" glyphName="CLOSE" layoutX="1059.0" layoutY="24.0" onMouseClicked="#closeAction" size="20" style="-fx-cursor: hand;" />
+      <FontAwesomeIconView fill="#e91a37" glyphName="MINUS" layoutX="1035.0" layoutY="25.0" onMouseClicked="#minAction" size="18" style="-fx-cursor: hand;" />
+      <TableView fx:id="commentaireTable" layoutX="76.0" layoutY="312.0" prefHeight="341.0" prefWidth="1010.0" stylesheets="@../../ressources/css/tab.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="24.0">
+         <columns>
+            <TableColumn fx:id="nomCol" prefWidth="111.0" text="Proprietaire" />
+            <TableColumn fx:id="emailCol" minWidth="0.0" prefWidth="141.0" text="Email" />
+            <TableColumn fx:id="DescriptionCol" prefWidth="243.0" text="Description" />
+            <TableColumn fx:id="ratingCol" minWidth="0.0" prefWidth="121.0" text="rating" />
+            <TableColumn fx:id="dateCol" minWidth="0.0" prefWidth="183.0" text="Date" />
+            <TableColumn fx:id="produitCol" minWidth="0.0" prefWidth="147.0" text="Produit" />
+            <TableColumn fx:id="idCol" minWidth="0.0" prefWidth="63.0" />
+         </columns>
+      </TableView>
+      <JFXTextField fx:id="RechercheTF" cacheShape="false" layoutX="54.0" layoutY="294.0" onKeyPressed="#RechercheCommetaire" prefHeight="25.0" prefWidth="252.0" promptText="Enter Description" />
+      <FontAwesomeIconView fill="#e91a37" glyphName="SEARCH" layoutX="312.0" layoutY="314.0" size="25" />
+      <FontAwesomeIconView fill="#797777" glyphName="TRASH" layoutX="1010.0" layoutY="314.0" onMouseClicked="#supprimer" size="25" wrappingWidth="24.428571701049805" />
+   </children>
+</AnchorPane>

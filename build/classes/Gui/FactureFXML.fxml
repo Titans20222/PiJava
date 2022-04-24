@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="Gui.FactureFXMLController">
+   <children>
+      <Label layoutX="52.0" layoutY="92.0" prefHeight="17.0" prefWidth="72.0" text="email :  " />
+      <Label layoutX="33.0" layoutY="122.0" prefHeight="17.0" prefWidth="101.0" text="numero de tel :" />
+      <Label layoutX="33.0" layoutY="155.0" prefHeight="17.0" prefWidth="109.0" text="nombre des places :" />
+      <Label layoutX="37.0" layoutY="200.0" prefHeight="17.0" prefWidth="101.0" text="prix unitaire :" />
+      <Label layoutX="37.0" layoutY="247.0" prefHeight="17.0" prefWidth="101.0" text="totale :" />
+      <Label layoutX="33.0" layoutY="293.0" prefHeight="17.0" prefWidth="101.0" text="info evenement :" />
+      <Label fx:id="lbemail" layoutX="305.0" layoutY="92.0" prefHeight="17.0" prefWidth="192.0" text="       " />
+      <Label fx:id="lbnumtel" layoutX="300.0" layoutY="130.0" prefHeight="17.0" prefWidth="204.0" />
+      <Label fx:id="lbnbplaces" layoutX="290.0" layoutY="164.0" prefHeight="17.0" prefWidth="240.0" />
+      <Label fx:id="lbprixu" layoutX="294.0" layoutY="200.0" prefHeight="17.0" prefWidth="192.0" />
+      <Label fx:id="lbtotale" layoutX="300.0" layoutY="239.0" prefHeight="17.0" prefWidth="186.0" />
+      <Label fx:id="lbevent" layoutX="52.0" layoutY="310.0" prefHeight="55.0" prefWidth="485.0" />
+   </children>
+</AnchorPane>

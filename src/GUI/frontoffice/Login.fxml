@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="789.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane id="AnchorPane" fx:id="blur" prefHeight="600.0" prefWidth="789.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <AnchorPane layoutX="32.0" layoutY="47.0" prefHeight="262.0" prefWidth="347.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
          <children>
@@ -33,7 +33,7 @@
                               <Font name="Century Gothic Bold" size="14.0" />
                            </font>
                         </JFXPasswordField>
-                        <JFXButton fx:id="BTNSignIn" buttonType="RAISED" layoutX="78.0" layoutY="291.0" onAction="#signInAction" prefHeight="38.0" prefWidth="101.0" style="-fx-background-color: e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" stylesheets="@../ressources/css/main.css" text="Sign In" textFill="WHITE">
+                        <JFXButton fx:id="BTNSignIn" buttonType="RAISED" layoutX="78.0" layoutY="291.0" onAction="#signInAction" prefHeight="38.0" prefWidth="101.0" style="-fx-background-color: e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" stylesheets="@../../ressources/css/main.css" text="Sign In" textFill="WHITE">
                            <font>
                               <Font name="Nirmala UI" size="16.0" />
                            </font>
@@ -42,16 +42,21 @@
                               <String fx:value="text" />
                            </styleClass>
                         </JFXButton>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="28.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/SANAATY.png" />
+                              <Image url="@../../images/SANAATY.png" />
                            </image>
                         </ImageView>
+                        <Label fx:id="chnagerMdp" layoutX="29.0" layoutY="378.0" minWidth="198.0" onMouseClicked="#changerMdpClicked" prefHeight="30.0" prefWidth="198.0" style="-fx-cursor: hand;" text="Mot de passe oublié ?" textFill="#e91a37" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                   <Pane fx:id="signUpPane2" layoutX="64.0" layoutY="24.0" prefHeight="384.0" prefWidth="256.0">
                      <children>
-                        <Label fx:id="signUpLabel" layoutX="71.0" layoutY="33.0" style="-fx-font-size: 28px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Sign Up" textFill="#e91a37">
+                        <Label fx:id="signUpLabel" layoutX="71.0" layoutY="33.0" style="-fx-font-size: 28px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Sign Up" textFill="#e91a37">
                            <font>
                               <Font name="Century Gothic Bold" size="24.0" />
                            </font>
@@ -66,7 +71,7 @@
                               <Font name="Century Gothic Bold" size="14.0" />
                            </font>
                         </JFXPasswordField>
-                        <JFXButton fx:id="BTNSignUp" buttonType="RAISED" layoutX="77.0" layoutY="297.0" onAction="#signUpAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: #e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Sign Up" textFill="WHITE">
+                        <JFXButton fx:id="BTNSignUp" buttonType="RAISED" layoutX="77.0" layoutY="297.0" onAction="#signUpAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: #e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Sign Up" textFill="WHITE">
                            <font>
                               <Font name="Nirmala UI" size="16.0" />
                            </font>
@@ -81,7 +86,7 @@
                   </Pane>
                   <Pane fx:id="signUpPane" layoutX="64.0" layoutY="24.0" prefHeight="384.0" prefWidth="256.0">
                      <children>
-                        <Label fx:id="signUpLabel1" layoutX="71.0" layoutY="-7.0" style="-fx-font-size: 28px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Sign Up" textFill="#e91a37">
+                        <Label fx:id="signUpLabel1" layoutX="71.0" layoutY="-7.0" style="-fx-font-size: 28px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Sign Up" textFill="#e91a37">
                            <font>
                               <Font name="Century Gothic Bold" size="24.0" />
                            </font>
@@ -97,7 +102,7 @@
                            </font>
                         </JFXTextField>
       
-                        <JFXButton fx:id="btnNext" buttonType="RAISED" layoutX="77.0" layoutY="351.0" onAction="#NextAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: #e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Next" textFill="WHITE">
+                        <JFXButton fx:id="btnNext" buttonType="RAISED" layoutX="77.0" layoutY="351.0" onAction="#NextAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: #e91a37; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Next" textFill="WHITE">
                            <font>
                               <Font name="Nirmala UI" size="16.0" />
                            </font>
@@ -119,21 +124,21 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="animatedLayer" layoutX="42.0" layoutY="62.0" prefHeight="488.0" prefWidth="364.0" style="-fx-background-color: linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37)linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37); -fx-background-radius: 1em;" stylesheets="@../ressources/css/main.css">
+      <AnchorPane fx:id="animatedLayer" layoutX="42.0" layoutY="62.0" prefHeight="469.0" prefWidth="364.0" style="-fx-background-color: linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37)linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37); -fx-background-radius: 1em;" stylesheets="@../../ressources/css/main.css">
          <children>
             <FontAwesomeIconView fx:id="minIcon" fill="WHITE" glyphName="MINUS" layoutX="290.0" layoutY="24.0" onMouseClicked="#minAction" size="16" style="-fx-cursor: hand;" visible="false" />
             <FontAwesomeIconView fx:id="closeIcon" fill="WHITE" glyphName="CLOSE" layoutX="314.0" layoutY="22.0" onMouseClicked="#closeAction" size="16" style="-fx-cursor: hand;" visible="false" />
             <ImageView fitHeight="494.0" fitWidth="364.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/artisan.png" />
+                  <Image url="@../../images/artisan.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="btnSignInAnim" buttonType="RAISED" layoutX="120.0" layoutY="254.0" onAction="#signInAnimAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: white; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../../pi/CoHeal-Desktop-master/src/blastandburn/resources/css/main.css" text="Sign In" textFill="#e91a37" visible="false">
+            <JFXButton fx:id="btnSignInAnim" buttonType="RAISED" layoutX="120.0" layoutY="254.0" onAction="#signInAnimAction" prefHeight="38.0" prefWidth="101.0" ripplerFill="WHITE" style="-fx-background-color: white; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Sign In" textFill="#e91a37" visible="false">
                <font>
                   <Font name="Nirmala UI" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btnSignUpAnim" buttonType="RAISED" layoutX="119.0" layoutY="254.0" onAction="#signUpAnimAction" prefHeight="38.0" prefWidth="114.0" ripplerFill="WHITE" style="-fx-background-color: white; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../../pi/CoHeal-Desktop-master/src/blastandburn/resources/css/main.css" text="Sign Up" textFill="#e91a37" AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="131.0">
+            <JFXButton fx:id="btnSignUpAnim" buttonType="RAISED" layoutX="119.0" layoutY="254.0" onAction="#signUpAnimAction" prefHeight="38.0" prefWidth="114.0" ripplerFill="WHITE" style="-fx-background-color: white; -fx-cursor: hand; -fx-background-radius: 1em; -fx-font-size: 16px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Sign Up" textFill="#e91a37" AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="131.0">
                <font>
                   <Font name="Nirmala UI" size="16.0" />
                </font>

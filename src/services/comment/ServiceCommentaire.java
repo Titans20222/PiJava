@@ -1,4 +1,4 @@
-package services;
+package services.comment;
 
 import IServices.commentaire.IServiceCommentaire;
 import javafx.collections.FXCollections;
@@ -6,12 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import model.Commentaire;
 import model.Users;
+import services.user.ServiceUsers;
 import utils.MyDb;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import IServices.user.IServiceUser;
 
 public class ServiceCommentaire implements IServiceCommentaire<Commentaire> {
@@ -147,4 +151,23 @@ c.setCreatedAt(rs.getDate("created_at"));
         }
 
     }
+    public int commentCount() {
+        int x=0;
+        try {
+            Statement stm=cnx.createStatement();
+            String query = "SELECT count(*) as total FROM `commentaire`";
+            ResultSet rst=stm.executeQuery(query);
+
+            while (rst.next()){
+                x=rst.getInt("total");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x;
+
+    }
+
+
 }

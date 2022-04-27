@@ -33,7 +33,7 @@
          <children>
             <ImageView fitHeight="34.0" fitWidth="33.0" layoutX="169.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/right-arrow.png" />
+                  <Image url="@../images/939255.png" />
                </image>
             </ImageView>
             <Label fx:id="userName1" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="155.0" style="-fx-font-size: 20;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Brahime El Hamed" textFill="#13547a">
@@ -63,9 +63,9 @@
       </AnchorPane>
       <AnchorPane fx:id="profileSlider" cache="true" cacheHint="SPEED" layoutX="1288.0" layoutY="40.0" prefHeight="492.0" prefWidth="310.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 1em 0 1em 1em;" AnchorPane.bottomAnchor="190.0" AnchorPane.rightAnchor="-318.0" AnchorPane.topAnchor="40.0">
          <children>
-            <ImageView fitHeight="70.0" fitWidth="111.0" layoutX="125.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="70.0" fitWidth="111.0" layoutX="113.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/SANAATY.png" />
+                  <Image url="@../images/939255.png" />
                </image>
             </ImageView>
             <Label fx:id="userName" alignment="CENTER" layoutX="53.0" layoutY="148.0" prefHeight="34.0" prefWidth="215.0" style="-fx-font-size: 22;" styleClass="text" stylesheets="@../ressources/css/main.css" text="BRAHIME El HAMED">
@@ -109,9 +109,9 @@
             </Label>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="70.0" fitWidth="164.0" layoutX="20.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="92.0" fitWidth="215.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/SANAATY.png" />
+            <Image url="@../images/SANAATY-removebg-preview.png" />
          </image>
       </ImageView>
    </children>

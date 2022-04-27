@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -33,7 +34,7 @@
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="table_users" layoutX="463.0" layoutY="41.0" prefHeight="568.0" prefWidth="738.0">
+      <TableView fx:id="table_users" layoutX="463.0" layoutY="41.0" prefHeight="322.0" prefWidth="738.0">
         <columns>
           <TableColumn fx:id="nomCol" prefWidth="89.0" text="nom" />
           <TableColumn fx:id="prenomCol" prefWidth="96.0" text="prenom" />
@@ -47,9 +48,10 @@
       </TableView>
       <ImageView fitHeight="150.0" fitWidth="162.0" layoutX="213.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="799.0" />
       <FontAwesomeIconView glyphName="UPLOAD" layoutX="248.0" layoutY="378.0" size="25" />
-      <JFXButton fx:id="btn_add" layoutX="51.0" layoutY="574.0" onMouseClicked="#addUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Ajouter " />
-      <JFXButton fx:id="btn_delete" layoutX="305.0" layoutY="574.0" onMouseClicked="#deleteUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Supprimer" />
+        <JFXButton fx:id="btn_delete" layoutX="305.0" layoutY="574.0" onMouseClicked="#deleteUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Supprimer" />
       <JFXButton fx:id="btn_edit" layoutX="186.0" layoutY="574.0" onMouseClicked="#editUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Modifier" />
       <JFXTextField fx:id="txt_id" focusColor="WHITE" layoutX="613.0" layoutY="619.0" prefHeight="44.0" prefWidth="169.0" unFocusColor="WHITE" />
+      <PieChart fx:id="pieChart" layoutX="761.0" layoutY="369.0" prefHeight="300.0" prefWidth="327.0" />
+      <JFXButton fx:id="btnExport" layoutX="489.0" layoutY="574.0"  styleClass="buttons" stylesheets="@../ressources/application.css" text="Export" />
    </children>
 </AnchorPane>

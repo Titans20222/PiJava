@@ -10,32 +10,19 @@ import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Commentaire;
-import model.Users;
-import services.ServiceCommentaire;
+import services.comment.ServiceCommentaire;
 import services.user.ServiceUsers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.sql.SQLException;
@@ -107,13 +94,13 @@ public class CommentaireListPageController implements Initializable {
         ObservableList<Commentaire> list = FXCollections.observableList((List<Commentaire>) commentaires);
 
 
-        nomCol.setCellValueFactory(new PropertyValueFactory<Commentaire,String>("nom"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<Commentaire,String>("email"));
+        nomCol.setCellValueFactory(new PropertyValueFactory<>("nomUser"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("emailUser"));
 
        DescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("created_at"));
-produitCol.setCellValueFactory(new PropertyValueFactory<>("produits_id"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+produitCol.setCellValueFactory(new PropertyValueFactory<>("idProduit"));
          commentaireTable.setItems(list);
 
         //PieChart

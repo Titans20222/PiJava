@@ -1,11 +1,18 @@
 package services.user;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Commentaire;
 import model.Users;
+import utils.BCrypt;
 import utils.MyDb;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import IServices.user.IServiceUser;
 
 public class ServiceUsers implements IServiceUser<Users> {
@@ -13,6 +20,8 @@ public class ServiceUsers implements IServiceUser<Users> {
     private Connection cnx =MyDb.getInstance().getCnx();
 
 
+    Connection connexion;
+    PreparedStatement ps;
 
   /*  @Override
     public void ajouter(Users users) {
@@ -29,7 +38,7 @@ public class ServiceUsers implements IServiceUser<Users> {
    
     @Override
     public void ajouter(Users users) {
-        String query = "INSERT INTO users (email, roles, password,mobile, nom,prenom,adresse,is_verified) VALUES (?, ?, ?, ?, ?, ?, ?,?);";
+        String query = "INSERT INTO users (email, roles, password,mobile, nom,prenom,adresse,is_verified,is_deleted,token) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?);";
         try (PreparedStatement stm = cnx.prepareStatement(query)) {
 
             stm.setString(1, users.getEmail());
@@ -47,6 +56,9 @@ public class ServiceUsers implements IServiceUser<Users> {
             stm.setString(6, users.getPrenom());
             stm.setString(7, users.getAdresse());
             stm.setBoolean(8, users.isVerified());
+            stm.setBoolean(9, users.isDeleted());
+            stm.setString(10, users.getToken());
+
 
             stm.executeUpdate();
             System.out.println("utilisateur ajouter avec succés");
@@ -66,6 +78,8 @@ public class ServiceUsers implements IServiceUser<Users> {
     public List<Users> afficher() {
 List<Users> users = new ArrayList<>();
 
+       // ObservableList<Users> users = FXCollections.observableArrayList();
+
 
         try {
             String qery="SELECT * FROM `users` ";
@@ -74,14 +88,21 @@ List<Users> users = new ArrayList<>();
 
             while (rs.next()){
  Users u = new Users();
- u.setId(rs.getInt(1));
- u.setNom(rs.getString("nom"));
- u.setPrenom(rs.getString("prenom"));
- u.setEmail(rs.getString("email"));
- u.setAdresse(rs.getString("adresse"));
- u.setRoles(rs.getString("roles"));
+ u.setId(rs.getInt("id"));
+                u.setEmail(rs.getString("email"));
+                u.setRoles(rs.getString("roles"));
                 u.setPassword(rs.getString("password"));
                 u.setMobile(rs.getString("mobile"));
+ u.setNom(rs.getString("nom"));
+ u.setPrenom(rs.getString("prenom"));
+
+ u.setAdresse(rs.getString("adresse"));
+u.setVerified(rs.getBoolean(8));
+
+                u.setDeleted(rs.getBoolean(9));
+                u.setToken(rs.getString(10));
+
+
 
 
  users.add(u);
@@ -94,6 +115,24 @@ List<Users> users = new ArrayList<>();
         }
 
         return users;
+    }
+
+    public int userCount() {
+        int x=0;
+        try {
+            Statement stm=cnx.createStatement();
+            String query = "SELECT count(*) as total FROM `users` where is_deleted=0";
+            ResultSet rst=stm.executeQuery(query);
+
+            while (rst.next()){
+                x=rst.getInt("total");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x;
+
     }
 
     @Override
@@ -189,9 +228,13 @@ else System.out.println("Ce nom n'existe pas  ......!");
     
     //---------login----------------------------------------------------
     @Override
-    public boolean Validate_Login(String email , String password){           
+    public boolean Validate_Login(String email , String password){
+        Users u=null;
         try {
-            String query = "SELECT * FROM users WHERE email = ? and password = ? and is_verified=0 ";
+
+
+
+            String query = "SELECT * FROM users WHERE email = ? and password = ? and is_deleted=0 ";
             // Step 2:Create a statement using connection object
             PreparedStatement pS = cnx.prepareStatement(query);
             pS.setString(1, email);
@@ -217,7 +260,7 @@ Boolean ISVERIFIED=resultSet.getBoolean("is_verified");
                 String req="select roles from users where id="+ID+"";
                 Statement stm=cnx.createStatement();
                 ResultSet resultSet2 = stm.executeQuery(req);
-
+             //   BCrypt.checkpw(PASSWORD, u.getPassword().replace("$2y$", "$2a$"));
                 if(resultSet2.next()){
                    String role =resultSet2.getString("roles");
                    UserSession.getInstance(ID,EMAIL,ROLE,PASSWORD,MOBILE,NOM,PRENOM,ADRESSE,ISVERIFIED);
@@ -310,7 +353,7 @@ Users users=null;
 
     public void DeleteUser(int idU) {
         try {
-            String query = "UPDATE  user set  is_verified=1  where user_id=" + idU +" ";
+            String query = "UPDATE  user set  is_deleted=1  where user_id=" + idU +" ";
             Statement st = cnx.createStatement();
             st.executeUpdate(query);
             System.out.println("User deleted succesfully");
@@ -318,4 +361,133 @@ Users users=null;
             System.out.println(ex.getMessage());
         }
     }
+
+    public boolean SearchUser_Role(Users u, String r) {
+        try {
+            Statement stm = cnx.createStatement();
+            String query = "SELECT * FROM `users` WHERE `id`= '" + u.getId() + "' and `roles`='" + r + "' ";
+            ResultSet rst = stm.executeQuery(query);
+            if (rst.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    public List<Users> UserByRole() {
+        ArrayList<Users> R = new ArrayList();
+        try {
+            Statement st = cnx.createStatement();
+            String query = "SELECT users.roles , COUNT(users.roles) AS nbruserbytype FROM users  GROUP BY roles";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Users users = new Users();
+
+                users = new Users(rs.getInt("nbruserbytype"), rs.getString("roles"));
+                R.add(users);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return R;
+    }
+
+
+    public ObservableList<Users> GetListPersonnes() {
+        ObservableList<Users> Users = FXCollections.observableArrayList();
+        try {
+            String query = "SELECT * FROM `users` ";
+            Statement stm = cnx.createStatement();
+            ResultSet rst = stm.executeQuery(query);
+            Users user;
+            while (rst.next()) {
+                user = new Users(rst.getString("email"), rst.getString("roles"), rst.getString("nom"), rst.getString("prenom"));
+                Users.add(user);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return Users;
+    }
+
+    public Users getUserByEmail(String email) {
+        Users u = null;
+        try {
+            String req = "SELECT * FROM `users` WHERE email = '" + email + "'";
+            ps = cnx.prepareStatement(req);
+            ResultSet rs = ps.executeQuery();
+            if (rs.first()) {
+                u = new Users(rs.getInt("id"), email,
+                        rs.getString("roles"), rs.getString("password"),  rs.getString("mobile"), rs.getString("nom"), rs.getString("prenom"),rs.getString("adresse"),  rs.getString("token"));
+
+//                System.out.println("User retrieved");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceUsers.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Echec get User");
+            return u;
+        }
+        return u;
+    }
+
+
+    public boolean changerToken(String code, String email) {
+        try {
+            String req = "UPDATE users  SET token = ?  WHERE email = '" + email + "'";
+            ps = connexion.prepareStatement(req);
+            ps.setString(1, code);
+            ps.executeUpdate();
+            //System.out.println("token changé avec succes");
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("erreur changement token");
+            Logger.getLogger(ServiceUsers.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    public boolean changerMdp(int idUser, String new_mdp) {
+        try {
+            String mdp = BCrypt.hashpw(new_mdp, BCrypt.gensalt(10)).replace("$2a$", "$2y$"); // cost in security.yml
+
+            String req = "UPDATE users  SET password = ?   WHERE id = '" + idUser + "'";
+            ps = cnx.prepareStatement(req);
+            ps.setString(1, mdp);
+            ps.executeUpdate();
+    System.out.println("mot de passe changé avec succes");
+            return true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceUsers.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur changement mdp");
+            return false;
+        }
+    }
+    public ObservableList<Users> RechercheUserAvance(String t) throws SQLException {
+        Statement stm = cnx.createStatement();
+        String query = "SELECT * FROM users WHERE  (email like '" + t + "%')";
+        ResultSet rs = stm.executeQuery(query);
+        ObservableList<Users> ListU = FXCollections.observableArrayList();
+        while (rs.next()) {
+            Users u = new Users();
+            u.setId(rs.getInt("id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+            u.setAdresse(rs.getString("adresse"));
+            u.setRoles(rs.getString("roles"));
+            u.setPassword(rs.getString("password"));
+            u.setMobile(rs.getString("mobile"));
+
+            ListU.add(u);
+        }
+        return ListU;
+    }
+
 }

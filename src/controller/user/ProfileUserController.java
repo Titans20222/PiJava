@@ -3,7 +3,6 @@ package controller.user;
 import animatefx.animation.ZoomIn;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controller.HomePageHolderController;
@@ -193,7 +192,7 @@ public class ProfileUserController implements Initializable {
         su.supprimer(UserSession.getId());
 
         UserSession.cleanUserSession();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/frontoffice/Login.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(root);

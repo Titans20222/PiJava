@@ -4,6 +4,9 @@
  */
 package controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,15 +23,21 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import model.Users;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import services.StatistiqueService;
 import services.user.ServiceUsers;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import utils.MyDb;
 
 /**
@@ -98,51 +107,14 @@ public ResultSet resultSet;
 
     @FXML
     private JFXButton btn_edit;
-
+    @FXML
+    private PieChart pieChart;
+    @FXML
+    private JFXButton btnExport;
     public ObservableList<Users> data= FXCollections.observableArrayList();
     private int id;
-
-    @FXML
-    void addUser() {
-String nom=txt_Nom.getText();
-String prenom=txt_Prenom.getText();
-String email=txt_Email.getText();
-String password=txt_Password.getText();
-String mobile =txt_Mobile.getText();
-String adresse =txt_Adresse.getText();
-        boolean isVarified=true;
-        String t = rolesChoiceBox.getValue().toString().toUpperCase();
-        if (t.contains("ADMIN")) {
-            t = "ADMIN";
-        }
-        String tt = "ROLE_" + t;
-        String role = "[" + "\"" + tt + "\"]";
-        if(!nom.equals("")&&!prenom.equals("")&&!email.equals("")&&!password.equals("")&&!mobile.equals("")&&!adresse.equals("")&&!role.equals("")) {
-            try {
-
-
-                ServiceUsers su = new ServiceUsers();
-                su.ajouter(new Users(email, role, password, mobile, nom, prenom, adresse,isVarified));
-
-                showUsers();
-                txt_Nom.setText("");
-                txt_Prenom.setText("");
-                txt_Email.setText("");
-                txt_Mobile.setText("");
-                txt_Adresse.setText("");
-                txt_Password.setText("");
-                rolesChoiceBox.setValue("");
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Utilisateur ajouter avec succés", ButtonType.OK);
-                alert.showAndWait();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }else {
-
-            Alert alert =new Alert(Alert.AlertType.WARNING,"Veuillez remplir tous les champs !",ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
+    private int nbrArtisan, nbrClient,nbrAdmin ;
+StatistiqueService sa =new StatistiqueService();
 
     @FXML
     void deleteUser() {
@@ -168,6 +140,7 @@ String adresse =txt_Adresse.getText();
             @Override
             public void handle(MouseEvent event) {
                 Users u =table_users.getItems().get(table_users.getSelectionModel().getSelectedIndex());
+                txt_id.setText(Integer.toString(u.getId()));
                 txt_Nom.setText(u.getNom());
                 txt_Prenom.setText(u.getPrenom());
                 txt_Email.setText(u.getEmail());
@@ -186,14 +159,8 @@ String adresse =txt_Adresse.getText();
         Users selected = table_users.getSelectionModel().getSelectedItem();
         id = selected.getId();
         txt_Nom.setText(selected.getNom());
-
-
-
-
-
-
-
 txt_id.setText(Integer.toString(id));
+
         txt_Email.setText(selected.getEmail());
         txt_Prenom.setText(selected.getPrenom());
         txt_Adresse.setText(selected.getAdresse());
@@ -203,12 +170,23 @@ txt_id.setText(Integer.toString(id));
         rolesChoiceBox.getSelectionModel().select(selected.getRoles());
         ServiceUsers su = new ServiceUsers();
 
-        String tt = "ROLE_" + rolesChoiceBox.getValue();
-        String roles = "[" + "\"" + tt + "\"]";
+      /*  String tt = "" + rolesChoiceBox.getValue();
+        String roles = "[" + "\"" + tt + "\"]";*/
 
 boolean isVeriied=true;
-        su.modifier(new Users(Integer.parseInt(txt_id.getText()),txt_Email.getText(),roles, txt_Password.getText(),txt_Mobile.getText(),txt_Nom.getText(),txt_Prenom.getText(),txt_Adresse.getText(),isVeriied));
-showUsers();
+        Users users=   new Users(Integer.parseInt(txt_id.getText()),txt_Email.getText(),rolesChoiceBox.getValue(), txt_Password.getText(),txt_Mobile.getText(),txt_Nom.getText(),txt_Prenom.getText(),txt_Adresse.getText(),isVeriied);
+
+        su.modifier(users);
+System.out.println(users);
+        TrayNotification tray = new TrayNotification();
+        AnimationType type = AnimationType.POPUP;
+
+        tray.setAnimationType(type);
+        tray.setTitle("Update  SUCCESS");
+        tray.setMessage("User  updated succesfully");
+        tray.setNotificationType(NotificationType.SUCCESS);
+        tray.showAndDismiss(Duration.millis(3000));
+        showUsers();
 
      /*   String nom =txt_Nom.getText();
         String prenom =txt_Prenom.getText();
@@ -303,6 +281,68 @@ showUsers();
         showUsers();
         loadRolesChoiceBox();
         setValueFromTable();
+        try {
+            piechart();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        btnExport.setOnAction(event -> {
+            String query="SELECT * FROM `users`";
+            try {
+                st= cnx.prepareStatement(query);
+                resultSet=st.executeQuery();
+                XSSFWorkbook wb=new XSSFWorkbook();
+                XSSFSheet sheet =wb.createSheet("Users List ");
+                XSSFRow header = sheet.createRow(0);
+                header.createCell(0).setCellValue("id");
+                header.createCell(1).setCellValue("email");
+                header.createCell(2).setCellValue("roles");
+                header.createCell(3).setCellValue("password");
+                header.createCell(4).setCellValue("mobile");
+                header.createCell(5).setCellValue("nom");
+                header.createCell(6).setCellValue("prenom");
+                header.createCell(7).setCellValue("adresse");
+                int index=1;
+                while (resultSet.next()){
+                    XSSFRow row =sheet.createRow(index);
+                    row.createCell(0).setCellValue(resultSet.getInt("id"));
+                    row.createCell(1).setCellValue(resultSet.getString("email"));
+row.createCell(2).setCellValue(resultSet.getString("roles"));
+
+                  row.createCell(3).setCellValue(resultSet.getString("password"));
+
+                  row.createCell(4).setCellValue(resultSet.getString("mobile"));
+
+                  row.createCell(5).setCellValue(resultSet.getString("nom"));
+   row.createCell(6).setCellValue(resultSet.getString("nom"));
+   row.createCell(7).setCellValue(resultSet.getString("prenom"));
+ row.createCell(8).setCellValue(resultSet.getString("adresse"));
+
+
+                        index++;
+
+                    //
+                }
+                FileOutputStream fileOut = new FileOutputStream("usersList.xlsx");
+                wb.write(fileOut);
+                fileOut.close();
+                TrayNotification tray = new TrayNotification();
+                AnimationType type = AnimationType.POPUP;
+
+                tray.setAnimationType(type);
+                tray.setTitle("UPLOAD  SUCCESS");
+                tray.setMessage("Users  Has Exported in excel");
+                tray.setNotificationType(NotificationType.SUCCESS);
+                tray.showAndDismiss(Duration.millis(3000));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
     @FXML
     void mobile(KeyEvent event) {
@@ -310,9 +350,30 @@ showUsers();
             Integer.parseInt(event.getCharacter());
         }catch (NumberFormatException ex){
 event.consume();
+
         }
 
 
     }
+    public void piechart() throws SQLException{
 
+        //----------------PieChart----------
+        nbrArtisan =sa.getNombreDisabledAccount();
+        nbrAdmin=sa.getNombreActivatedAccount();
+        nbrClient=sa.getNombreUsers();
+        ObservableList<PieChart.Data> valueList = FXCollections.observableArrayList(
+                new PieChart.Data("Artisan", nbrArtisan),
+                new PieChart.Data("Client",nbrClient),
+                new PieChart.Data("Admin", nbrAdmin)
+
+        );
+
+        pieChart.setTitle("User par role");
+        pieChart.setData(valueList);
+        pieChart.getData().forEach(data -> {
+            String percentage = String.format("%.2f%%", (data.getPieValue() *10));
+            Tooltip toolTip = new Tooltip(percentage);
+            Tooltip.install(data.getNode(), toolTip);
+        });
+    }
 }

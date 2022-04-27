@@ -4,11 +4,8 @@ package controller;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -80,6 +76,7 @@ public class HomePageHolderController implements Initializable {
         profileSideBar.getStyleClass().add("unselectedMenu");
 
         userName1.setText(UserSession.getNom() + " " + UserSession.getPrenom());
+        userName.setText(UserSession.getNom() + " " + UserSession.getPrenom());
         userEmail.setText(UserSession.getEmail());
      /*   if (UserSession.getRoles().equals("[\"ROLE_ARTISAN\"]")) {
             reportsSideBar.setVisible(true);
@@ -212,7 +209,7 @@ public class HomePageHolderController implements Initializable {
     @FXML
     private void signOutAction(MouseEvent event) throws IOException {
         UserSession.cleanUserSession();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/frontoffice/Login.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(root);

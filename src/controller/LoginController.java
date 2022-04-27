@@ -4,10 +4,10 @@ import animatefx.animation.ZoomIn;
 import animatefx.animation.ZoomOut;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RegexValidator;
+import controller.frontoffcie.ChangerMdp;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -38,6 +40,8 @@ import services.user.ServiceUsers;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
+import utils.BCrypt;
+import utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,7 +56,7 @@ public class LoginController implements Initializable {
     private boolean emailSI = false, emailSU = false, fName = false, lName = false,adresse = false, mobile=false,isVerified=false,password = false,role=false;
 
     @FXML
-    private AnchorPane layer;
+    private AnchorPane blur;
 
     @FXML
     private Pane signInPane;
@@ -129,6 +133,8 @@ public class LoginController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    ServiceUsers su =new ServiceUsers();
+Users u;
     //ValidationSupport ValidationEmailSIN = new ValidationSupport();
     //ValidationSupport ValidationPasswordSIN = new ValidationSupport();
     @Override
@@ -166,10 +172,12 @@ public class LoginController implements Initializable {
         //test empty fields
         if (emailSI) {
             String email = TFEmailSIN.getText();
-            String password = TFPasswordSIN.getText();
-            ServiceUsers su = new ServiceUsers();
+            String password =TFPasswordSIN.getText();
+
+                ServiceUsers su = new ServiceUsers();
             boolean flag = su.Validate_Login(email, password);
-            if (!flag) {
+       //     BCrypt.checkpw(password, u.getPassword().replace("$2y$", "$2a$"));
+              if (!flag) {
                 //-------------notification--------------------------------------------
                 TrayNotification tray = new TrayNotification();
                 AnimationType type = AnimationType.POPUP;
@@ -181,7 +189,8 @@ public class LoginController implements Initializable {
                 tray.showAndDismiss(Duration.millis(3000));
                 //---------------------------------------------------------------------
             } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/user/ProfileUser.fxml"));
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/HomePageHolder.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -206,8 +215,8 @@ public class LoginController implements Initializable {
                 root.setOnMouseReleased((MouseEvent mouseEvent) -> {
                     stage.setOpacity(1.0f);
                 });
-            }
-        }
+            }}
+
     }
 
     @FXML
@@ -227,18 +236,19 @@ public class LoginController implements Initializable {
             String tt = "ROLE_" + t;
             String role = "[" + "\"" + tt + "\"]";
             //sets
-            String password =TFPasswordSUP.getText();
+       //     String password =TFPasswordSUP.getText();
              String adresse=TFAdresseSUP.getText();
              String mobile =TFMobileSUP.getText();
 
             String prenom= TFPrenomSUP.getText();
           String email = TFEmailSUP.getText();
             String nom= TFNomSUP.getText();
+            String code = Utils.generateCode(6);
 
 
-
-
-            sp.ajouter(new Users(email,role,password,mobile,nom,prenom,adresse,isVerified));
+            String password = BCrypt.hashpw(TFPasswordSUP.getText(), BCrypt.gensalt(10)).replace("$2a$", "$2y$");
+ boolean isDeleted=false;
+            sp.ajouter(new Users(email,role,password,mobile,nom,prenom,adresse,code,isVerified,isDeleted));
 
             //set the sign up email to sign in field
             String EM = TFEmailSUP.getText();
@@ -497,4 +507,46 @@ public class LoginController implements Initializable {
 
 
     }
+
+    @FXML
+    private void changerMdpClicked(MouseEvent event) {
+        String usr = TFEmailSIN.getText();
+        Users u = null;
+        if (usr.equals("")) {
+            Utils.showAlert(Alert.AlertType.WARNING, "Champ vide", null, "Veuillez bien renseigner votre nom d'utilisateur ou email");
+            TFEmailSIN.requestFocus();
+        } else {
+
+            if (usr.contains("@")) {
+                u = su.getUserByEmail(usr);
+            }
+            if (u != null) {
+                String code = Utils.generateCode(6);
+              Utils.sendMail(u.getEmail(), code);
+               ChangerMdp.set(code, u, blur);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/frontoffice/ChangerMdp.fxml"));
+
+                Stage stage = Utils.getAnotherStage(loader, "ChangerMdp");
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.show();
+
+            } else {
+                Alert alert = Utils.getAlert(Alert.AlertType.CONFIRMATION, "Erreur de récupération", null,
+                        "Username ou mail n'existe pas dans notre base de données \nVoulez-vous faire une inscription ?");
+                alert.show();
+                alert.resultProperty().addListener(new ChangeListener<ButtonType>() {
+                    @Override
+                    public void changed(ObservableValue<? extends ButtonType> observable, ButtonType oldValue, ButtonType newValue) {
+                        if (newValue == ButtonType.OK) {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangerMdp.fxml"));
+                            Utils.getAnotherStage(loader, "Login").show();
+                        }
+                    }
+                });
+
+                TFEmailSIN.requestFocus();
+            }
+        }
+    }
+
 }

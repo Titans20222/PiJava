@@ -2,10 +2,36 @@ package model;
 
 public class Users {
     private  int id;
-    private  String email,roles,password,mobile,nom,prenom,adresse;
-    private boolean isVerified;
+    private  String email,roles,password,mobile,nom,prenom,adresse,token;;
 
+    private boolean isVerified;
+    private boolean isDeleted;
     public Users() {
+    }
+
+
+    public Users(int id, String email, String roles, String password, String mobile, String nom, String prenom, String adresse, String token) {
+        this.id = id;
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
+        this.mobile = mobile;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.token = token;
+    }
+
+    public Users(int id, String roles) {
+        this.id = id;
+        this.roles = roles;
+    }
+
+    public Users(String email, String roles, String nom, String prenom) {
+        this.email = email;
+        this.roles = roles;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     public Users(int id, String email, String roles, String password, String mobile, String nom, String prenom, String adresse, boolean isVerified) {
@@ -40,6 +66,19 @@ public class Users {
         this.prenom = prenom;
         this.adresse = adresse;
         this.isVerified = isVerified;
+    }
+
+    public Users(String email, String roles, String password, String mobile, String nom, String prenom, String adresse, String token, boolean isVerified, boolean isDeleted) {
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
+        this.mobile = mobile;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.token = token;
+        this.isVerified = isVerified;
+        this.isDeleted = isDeleted;
     }
 
     public int getId() {
@@ -127,5 +166,21 @@ public class Users {
                 ", adresse='" + adresse + '\'' +
                 ", isVerified=" + isVerified +
                 "\n";
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

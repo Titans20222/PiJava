@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/commons-codec-1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/AnimateFX-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/activation-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/commons-io-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/controlsfx-8.40.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/fontawesomefx-8.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/glassfish-corba-omgapi-4.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/itextpdf-5.5.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/javax.mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/jfoenix-8.0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/mysql-connector-java-5.1.23-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/qrgen-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/TrayTester.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/zxing-core-1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/zxing-j2se-1.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -30,9 +30,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import model.Users;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import services.StatistiqueService;
 import services.user.ServiceUsers;
 import tray.animations.AnimationType;
@@ -286,7 +284,7 @@ System.out.println(users);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        btnExport.setOnAction(event -> {
+      /*  btnExport.setOnAction(event -> {
             String query="SELECT * FROM `users`";
             try {
                 st= cnx.prepareStatement(query);
@@ -342,7 +340,7 @@ row.createCell(2).setCellValue(resultSet.getString("roles"));
                 e.printStackTrace();
             }
 
-        });
+        });*/
     }
     @FXML
     void mobile(KeyEvent event) {

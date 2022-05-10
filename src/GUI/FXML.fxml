@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLController">
+   <children>
+      <ImageView fitHeight="416.0" fitWidth="588.0" layoutX="-1.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@person_2.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="239.0" layoutY="200.0" mnemonicParsing="false" onAction="#Commande" prefHeight="37.0" prefWidth="151.0" style="-fx-background-color: #ecd9c6;" text=" Commande" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />
+      <Button layoutX="239.0" layoutY="329.0" mnemonicParsing="false" onAction="#LigneCommande" prefHeight="37.0" prefWidth="151.0" style="-fx-background-color: #ecd9c6;" text="Ligne De Commande" />
+      <Button layoutX="239.0" layoutY="266.0" mnemonicParsing="false" onAction="#Stat" prefHeight="37.0" prefWidth="151.0" style="-fx-background-color: #ecd9c6;" text="    Statistiques" />
+      <Text fill="WHITE" layoutX="191.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SANAATY" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="246.45263671875" AnchorPane.bottomAnchor="326.5771484375" AnchorPane.leftAnchor="191.0" AnchorPane.rightAnchor="144.54736328125" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="Andalus" size="35.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="251.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons8-statistiques-20.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -10,12 +10,15 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import model.Users;
 import services.user.ServiceUsers;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import tray.animations.AnimationType;
 import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import utils.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,6 +61,7 @@ public class ChangerMdp implements Initializable {
         blur = blurr;
     }
 
+
     @FXML
     void annulerClicked(MouseEvent event) {
             Stage s = (Stage) annuler.getScene().getWindow();
@@ -75,7 +79,15 @@ public class ChangerMdp implements Initializable {
             } else {
                 ServiceUsers us = new ServiceUsers();
                 if (us.changerMdp(u.getId(), password1.getText())) {
-                    Utils.showTrayNotification(NotificationType.NOTICE, "Votre mot de passe est changé", null, null,"", 5000);
+                    TrayNotification tray = new TrayNotification();
+                    AnimationType type = AnimationType.POPUP;
+
+                    tray.setAnimationType(type);
+                    tray.setTitle(" Success");
+                    tray.setMessage("Votre mot de passe est changé ");
+                    tray.setNotificationType(NotificationType.SUCCESS);
+                    tray.showAndDismiss(Duration.millis(3000));
+                    //Utils.showTrayNotification(NotificationType.NOTICE, "", null, null,"", 5000);
                 }
                 Stage s = (Stage) annuler.getScene().getWindow();
                 blur.setEffect(null);
@@ -85,6 +97,8 @@ public class ChangerMdp implements Initializable {
         } else {
             erreur.setText("Veuillez renseigner tous les champs");
         }
+
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,4 +112,6 @@ public class ChangerMdp implements Initializable {
             System.out.println("pas d'utilisateur");
         }
     }
+
+
 }

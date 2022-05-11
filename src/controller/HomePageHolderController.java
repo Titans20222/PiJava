@@ -1,9 +1,12 @@
 package controller;
 
 
+import controller.event.EventItemController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.TranslateTransition;
@@ -16,10 +19,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import model.Evenement;
+import services.ui.UIService;
 import services.user.UserSession;
 
 /**
@@ -39,12 +45,6 @@ public class HomePageHolderController implements Initializable {
     @FXML
     private AnchorPane eventSideBar;
     @FXML
-    private AnchorPane sessionSideBar;
-    @FXML
-    private AnchorPane recipeSideBar;
-    @FXML
-    private AnchorPane bookSideBar;
-    @FXML
     private AnchorPane homeSideBar;
     @FXML
     private AnchorPane profileSlider;
@@ -63,9 +63,9 @@ public class HomePageHolderController implements Initializable {
     @FXML
     private AnchorPane reportsSideBar;
     @FXML
-    private FontAwesomeIconView minIcon;
+    private AnchorPane produitSideBar;
     @FXML
-    private FontAwesomeIconView closeIcon;
+    private AnchorPane formationSideBar;
 
 
     @Override
@@ -84,12 +84,15 @@ public class HomePageHolderController implements Initializable {
             reportsSideBar.setVisible(false);
         }*/
         try {
-            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/Home.fxml")));
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/HomePage.fxml")));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
     }
+
+
+
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -106,15 +109,11 @@ public class HomePageHolderController implements Initializable {
         profileMenu();
     }
     public void profileMenu() throws IOException {
-//        reportsSideBar.getStyleClass().removeAll(reportsSideBar.getStyleClass());
-        reportsSideBar.getStyleClass().add("menu");
-        reportsSideBar.getStyleClass().add("unselectedMenu");
+
 
         //  taskSideBar.getStyleClass().removeAll(taskSideBar.getStyleClass());
         // taskSideBar.getStyleClass().add("menu");
         // taskSideBar.getStyleClass().add("unselectedMenu");
-
-
 
 
 
@@ -133,8 +132,49 @@ public class HomePageHolderController implements Initializable {
         homeSideBar.getStyleClass().add("unselectedMenu");
 
         pageHolder.getChildren().removeAll(pageHolder.getChildren());
-        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/user/ProfileUser.fxml")));
+        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI//user/ProfileUser.fxml")));
     }
+    @FXML
+    private void eventPageAction(MouseEvent event) throws IOException {
+        TranslateTransition slide = new TranslateTransition();
+        slide.setDuration(Duration.seconds(0.4));
+        slide.setNode(slider);
+        slide.setToY(97);
+        slide.play();
+        eventMenu();
+    }
+    public void eventMenu() throws IOException {
+
+        // taskSideBar.getStyleClass().removeAll(taskSideBar.getStyleClass());
+        // taskSideBar.getStyleClass().add("menu");
+        // taskSideBar.getStyleClass().add("unselectedMenu");
+
+        profileSideBar.getStyleClass().removeAll(profileSideBar.getStyleClass());
+        profileSideBar.getStyleClass().add("menu");
+        profileSideBar.getStyleClass().add("unselectedMenu");
+
+        eventSideBar.getStyleClass().removeAll(eventSideBar.getStyleClass());
+        eventSideBar.getStyleClass().add("menu");
+        eventSideBar.getStyleClass().add("selectedMenu");
+
+
+
+        homeSideBar.getStyleClass().removeAll(homeSideBar.getStyleClass());
+        homeSideBar.getStyleClass().add("menu");
+        homeSideBar.getStyleClass().add("unselectedMenu");
+        
+        produitSideBar.getStyleClass().removeAll(produitSideBar.getStyleClass());
+        produitSideBar.getStyleClass().add("menu");
+        produitSideBar.getStyleClass().add("unselectedMenu");
+        
+
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/backoffice/event/EventPage.fxml")));
+    }
+
+
+
+
     @FXML
     private void backAction(MouseEvent event) {
         TranslateTransition slide = new TranslateTransition();
@@ -197,6 +237,10 @@ public class HomePageHolderController implements Initializable {
         // bookSideBar.getStyleClass().removeAll(bookSideBar.getStyleClass());
         // bookSideBar.getStyleClass().add("menu");
         // bookSideBar.getStyleClass().add("unselectedMenu");
+        
+        produitSideBar.getStyleClass().removeAll(produitSideBar.getStyleClass());
+        produitSideBar.getStyleClass().add("menu");
+        produitSideBar.getStyleClass().add("unselectedMenu");
 
         homeSideBar.getStyleClass().removeAll(homeSideBar.getStyleClass());
         homeSideBar.getStyleClass().add("menu");
@@ -204,7 +248,7 @@ public class HomePageHolderController implements Initializable {
 
 
         pageHolder.getChildren().removeAll(pageHolder.getChildren());
-        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/allUsers.fxml")));
+        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/HomePage.fxml")));
     }
     @FXML
     private void signOutAction(MouseEvent event) throws IOException {
@@ -233,6 +277,45 @@ public class HomePageHolderController implements Initializable {
         root.setOnMouseReleased((MouseEvent mouseEvent) -> {
             stage.setOpacity(1.0f);
         });
+    }
+
+    @FXML
+    private void marketPageAction(MouseEvent event) throws IOException {
+        marketMenu();
+        TranslateTransition slide = new TranslateTransition();
+        slide.setDuration(Duration.seconds(0.4));
+        slide.setNode(slider);
+        slide.setToY(170);
+        slide.play();
+    }
+    public void marketMenu() throws IOException {
+
+        // taskSideBar.getStyleClass().removeAll(taskSideBar.getStyleClass());
+        // taskSideBar.getStyleClass().add("menu");
+        // taskSideBar.getStyleClass().add("unselectedMenu");
+        
+        homeSideBar.getStyleClass().removeAll(homeSideBar.getStyleClass());
+        homeSideBar.getStyleClass().add("menu");
+        homeSideBar.getStyleClass().add("unselectedMenu");
+
+        profileSideBar.getStyleClass().removeAll(profileSideBar.getStyleClass());
+        profileSideBar.getStyleClass().add("menu");
+        profileSideBar.getStyleClass().add("unselectedMenu");
+
+        eventSideBar.getStyleClass().removeAll(eventSideBar.getStyleClass());
+        eventSideBar.getStyleClass().add("menu");
+        eventSideBar.getStyleClass().add("unselectedMenu");
+
+
+
+        
+        
+        produitSideBar.getStyleClass().removeAll(produitSideBar.getStyleClass());
+        produitSideBar.getStyleClass().add("menu");
+        produitSideBar.getStyleClass().add("selectedMenu");
+
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+        pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/gui_yasmine/gestion_market/market.fxml")));
     }
 
 

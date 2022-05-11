@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,41 +13,45 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="677.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AllUsersController">
+<AnchorPane prefHeight="677.0" prefWidth="1225.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AllUsersController">
    <children>
       <Label layoutX="21.0" layoutY="41.0" text="Rechercher">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txt_searchEmail" layoutX="132.0" layoutY="36.0" prefHeight="31.0" prefWidth="221.0" promptText="recherche par email" />
-      <FontAwesomeIconView glyphName="SEARCH" layoutX="375.0" layoutY="56.0" onMouseClicked="#searchUser" size="20" />
+      <JFXTextField fx:id="txt_searchEmail" layoutX="132.0" layoutY="36.0" prefHeight="31.0" prefWidth="249.0" promptText="recherche par email" />
+      <FontAwesomeIconView glyphName="SEARCH" layoutX="403.0" layoutY="58.0" onMouseClicked="#searchUser" size="20" />
       <JFXTextField fx:id="txt_Nom" layoutX="28.0" layoutY="96.0" prefHeight="44.0" prefWidth="169.0" promptText="nom" unFocusColor="#7294ac" />
       <JFXTextField fx:id="txt_Prenom" layoutX="229.0" layoutY="96.0" prefHeight="44.0" prefWidth="198.0" promptText="penom" unFocusColor="#7294ac" />
       <JFXTextField fx:id="txt_Email" layoutX="28.0" layoutY="156.0" prefHeight="44.0" prefWidth="399.0" promptText="email" unFocusColor="#7294ac" />
-      <JFXTextField fx:id="txt_Mobile" layoutX="28.0" layoutY="211.0" prefHeight="44.0" prefWidth="162.0" promptText="mobile" unFocusColor="#7294ac" />
+      <JFXTextField fx:id="txt_Mobile" layoutX="28.0" layoutY="211.0" onKeyTyped="#mobile" prefHeight="44.0" prefWidth="162.0" promptText="mobile" unFocusColor="#7294ac" />
       <JFXTextField fx:id="txt_Adresse" layoutX="217.0" layoutY="211.0" prefHeight="44.0" prefWidth="212.0" promptText="adresse" unFocusColor="#7294ac" />
-      <JFXComboBox fx:id="txt_Role" layoutX="25.0" layoutY="354.0" prefHeight="31.0" prefWidth="125.0" promptText="role" unFocusColor="#7294ac" />
+      <JFXComboBox fx:id="rolesChoiceBox" layoutX="25.0" layoutY="354.0" prefHeight="31.0" prefWidth="125.0" promptText="role" unFocusColor="#7294ac" />
       <JFXPasswordField fx:id="txt_Password" layoutX="25.0" layoutY="268.0" prefHeight="44.0" prefWidth="399.0" promptText="password" unFocusColor="#7294ac" />
       <Label layoutX="287.0" layoutY="359.0" text="aucun séléctionée" textFill="#7294ac">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="table_users" layoutX="486.0" layoutY="36.0" prefHeight="546.0" prefWidth="685.0" stylesheets="@../ressources/application.css">
+      <TableView fx:id="table_users" layoutX="463.0" layoutY="41.0" prefHeight="322.0" prefWidth="738.0">
         <columns>
           <TableColumn fx:id="nomCol" prefWidth="89.0" text="nom" />
           <TableColumn fx:id="prenomCol" prefWidth="96.0" text="prenom" />
-            <TableColumn fx:id="emailCol" prefWidth="117.0" text="email" />
-            <TableColumn fx:id="emailCol" prefWidth="96.0" text="mobile" />
-            <TableColumn fx:id="adresseCol" prefWidth="122.0" text="adresse" />
-            <TableColumn fx:id="roleCol" prefWidth="164.0" text="role" />
+            <TableColumn fx:id="emailCol" prefWidth="203.0" text="email" />
+            <TableColumn fx:id="mobileCol" prefWidth="84.0" text="mobile" />
+            <TableColumn fx:id="adresseCol" prefWidth="113.0" text="adresse" />
+            <TableColumn fx:id="roleCol" prefWidth="138.0" text="role" />
+            <TableColumn fx:id="idCol" prefWidth="22.0" visible="false" />
+            <TableColumn fx:id="passwordCol" prefWidth="22.0" visible="false" />
         </columns>
       </TableView>
-      <ImageView fitHeight="150.0" fitWidth="221.0" layoutX="141.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="478.0" />
+      <ImageView fitHeight="150.0" fitWidth="162.0" layoutX="213.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="799.0" />
       <FontAwesomeIconView glyphName="UPLOAD" layoutX="248.0" layoutY="378.0" size="25" />
-      <JFXButton fx:id="btn_add" layoutX="51.0" layoutY="549.0" onMouseClicked="#addUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Ajouter " />
-      <JFXButton fx:id="btn_delete" layoutX="292.0" layoutY="549.0" onMouseClicked="#deleteUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Supprimer" />
-      <JFXButton fx:id="btn_edit" layoutX="175.0" layoutY="549.0" onMouseClicked="#editUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Modifier" />
+        <JFXButton fx:id="btn_delete" layoutX="305.0" layoutY="574.0" onMouseClicked="#deleteUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Supprimer" />
+      <JFXButton fx:id="btn_edit" layoutX="186.0" layoutY="574.0" onMouseClicked="#editUser" styleClass="buttons" stylesheets="@../ressources/application.css" text="Modifier" />
+      <JFXTextField fx:id="txt_id" focusColor="WHITE" layoutX="613.0" layoutY="619.0" prefHeight="44.0" prefWidth="169.0" unFocusColor="WHITE" />
+      <PieChart fx:id="pieChart" layoutX="761.0" layoutY="369.0" prefHeight="300.0" prefWidth="327.0" />
+      <JFXButton fx:id="btnExport" layoutX="489.0" layoutY="574.0"  styleClass="buttons" stylesheets="@../ressources/application.css" text="Export" />
    </children>
 </AnchorPane>

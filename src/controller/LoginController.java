@@ -14,16 +14,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -36,6 +35,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import model.Users;
+import nl.captcha.Captcha;
 import services.user.ServiceUsers;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
@@ -43,6 +43,7 @@ import tray.notification.TrayNotification;
 import utils.BCrypt;
 import utils.Utils;
 
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,8 +54,16 @@ import java.util.logging.Logger;
 
 public class LoginController implements Initializable {
 
-    private boolean emailSI = false, emailSU = false, fName = false, lName = false,adresse = false, mobile=false,isVerified=false,password = false,role=false;
+    Captcha captcha = new Captcha.Builder(200, 50)
+            .addText()
+            .addBackground()
+            .addNoise()
+            .addBorder()
+            .build();
 
+    private boolean emailSI = false, emailSU = false, fName = false, lName = false,adresse = false, mobile=false,isVerified=false,password = false,role=false;
+    String client = "["+"\"ROLE_CLIENT\""+"]";
+    String artisan = "["+"\"ROLE_ARTISAN\""+"]";
     @FXML
     private AnchorPane blur;
 
@@ -128,6 +137,11 @@ public class LoginController implements Initializable {
     @FXML
     private JFXButton btnSignUpAnim;
 
+    @FXML
+    private TextField tcaptcha;
+    @FXML
+    private ImageView icaptcha;
+
     double xOffset, yOffset;
     Stage stage;
     /**
@@ -139,6 +153,8 @@ Users u;
     //ValidationSupport ValidationPasswordSIN = new ValidationSupport();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        System.out.println(artisan);
         TFEmailSIN.requestFocus();
         new ZoomOut(signUpPane2).play();
         emailValidatorSI();
@@ -147,6 +163,10 @@ Users u;
         nameValidator();
         lNameValidator();
         loadRolesChoiceBox();
+        BufferedImage i = captcha.getImage();
+        Image ii = SwingFXUtils.toFXImage(i, null);
+        ImageView ll = new ImageView(ii);
+        icaptcha.setImage(ii);
         //ValidationEmailSIN.registerValidator(TFEmailSIN, Validator.createEmptyValidator("Email field is empty"));
         //ValidationPasswordSIN.registerValidator(TFPasswordSIN, Validator.createEmptyValidator("Password field is empty"));
     }
@@ -170,27 +190,53 @@ Users u;
         //login code    
         Window owner = BTNSignIn.getScene().getWindow();
         //test empty fields
-        if (emailSI) {
+      if (emailSI) {
             String email = TFEmailSIN.getText();
-            String password =TFPasswordSIN.getText();
+            String password =su.crypter_password(TFPasswordSIN.getText());
 
                 ServiceUsers su = new ServiceUsers();
-            boolean flag = su.Validate_Login(email, password);
+
        //     BCrypt.checkpw(password, u.getPassword().replace("$2y$", "$2a$"));
-              if (!flag) {
-                //-------------notification--------------------------------------------
-                TrayNotification tray = new TrayNotification();
-                AnimationType type = AnimationType.POPUP;
+               if (su.Validate_Login(email, password,client)&&(captcha.isCorrect(tcaptcha.getText()))){
 
-                tray.setAnimationType(type);
-                tray.setTitle("Sign In Failed");
-                tray.setMessage("Rong Email and/or Password or account is deleted");
-                tray.setNotificationType(NotificationType.ERROR);
-                tray.showAndDismiss(Duration.millis(3000));
-                //---------------------------------------------------------------------
-            } else {
+              FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/HomePageHolder.fxml"));
+              Parent root = loader.load();
+              Stage stage = new Stage();
+              Scene scene = new Scene(root);
+              stage.setScene(scene);
+              stage.initStyle(StageStyle.TRANSPARENT);
+              scene.setFill(Color.TRANSPARENT);
+              scene.getStylesheets().add("/ressources/css/main.css");
+              HomePageHolderController hpc = new HomePageHolderController();
+              hpc.setStage(stage);
+              stage.show();
+              Stage stage1 = (Stage) BTNSignIn.getScene().getWindow();
+              stage1.close();
+              root.setOnMousePressed((MouseEvent mouseEvent) -> {
+                  xOffset = mouseEvent.getSceneX();
+                  yOffset = mouseEvent.getSceneY();
+              });
+              root.setOnMouseDragged((MouseEvent mouseEvent) -> {
+                  stage.setX(mouseEvent.getScreenX() - xOffset);
+                  stage.setY(mouseEvent.getScreenY() - yOffset);
+                  stage.setOpacity(0.85f);
+              });
+              root.setOnMouseReleased((MouseEvent mouseEvent) -> {
+                  stage.setOpacity(1.0f);
+              });
+                   TrayNotification tray = new TrayNotification();
+                   AnimationType type = AnimationType.POPUP;
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/HomePageHolder.fxml"));
+                   tray.setAnimationType(type);
+                   tray.setTitle("Sign In Success");
+                   tray.setMessage("Bienvenue Notre Client ");
+                   tray.setNotificationType(NotificationType.SUCCESS);
+                   tray.showAndDismiss(Duration.millis(3000));
+                   return;
+               }
+          if (su.Validate_Login(email, password,artisan)&&(captcha.isCorrect(tcaptcha.getText()))) {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/backoffice/AdminPageHolder.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -215,7 +261,28 @@ Users u;
                 root.setOnMouseReleased((MouseEvent mouseEvent) -> {
                     stage.setOpacity(1.0f);
                 });
-            }}
+              TrayNotification tray = new TrayNotification();
+              AnimationType type = AnimationType.POPUP;
+
+              tray.setAnimationType(type);
+              tray.setTitle("Sign In Success");
+              tray.setMessage("Bienvenue Artisan");
+              tray.setNotificationType(NotificationType.SUCCESS);
+              tray.showAndDismiss(Duration.millis(3000));
+             return;
+            } if (!su.Validate_Login(email, password,artisan)||(!su.Validate_Login(email, password,artisan))) {
+              //-------------notification--------------------------------------------
+              TrayNotification tray = new TrayNotification();
+              AnimationType type = AnimationType.POPUP;
+
+              tray.setAnimationType(type);
+              tray.setTitle("Sign In Failed");
+              tray.setMessage("Rong Email and/or Password or account is deleted");
+              tray.setNotificationType(NotificationType.ERROR);
+              tray.showAndDismiss(Duration.millis(3000));
+              //---------------------------------------------------------------------
+          }
+      }
 
     }
 
@@ -244,9 +311,11 @@ Users u;
           String email = TFEmailSUP.getText();
             String nom= TFNomSUP.getText();
             String code = Utils.generateCode(6);
+        //    BCrypt.hashpw(TFPasswordSUP.getText(), BCrypt.gensalt(10)).replace("$2a$", "$2y$");
 
 
-            String password = BCrypt.hashpw(TFPasswordSUP.getText(), BCrypt.gensalt(10)).replace("$2a$", "$2y$");
+            String password =TFPasswordSUP.getText();
+            password=su.crypter_password(password);
  boolean isDeleted=false;
             sp.ajouter(new Users(email,role,password,mobile,nom,prenom,adresse,code,isVerified,isDeleted));
 
@@ -548,5 +617,30 @@ Users u;
             }
         }
     }
+
+
+    @FXML
+    private void refCaptcha(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/frontoffice/Login.fxml"));
+            Parent root = loader.load();
+            LoginController mdc = loader.getController();
+            mdc.test(TFEmailSIN.getText(),TFPasswordSIN.getText());
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException ex){
+            System.out.println(ex);
+
+        }
+
+    }
+
+    public void test(String mail,String pass){
+        TFEmailSIN.setText(mail);
+        TFPasswordSIN.setText(pass);
+    }
+
 
 }

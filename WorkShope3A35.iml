@@ -10,5 +10,9 @@
     <orderEntry type="library" name="jfoenix-8.0.1" level="project" />
     <orderEntry type="library" name="AnimateFX-1.2.0" level="project" />
     <orderEntry type="library" name="commons-codec-1.9" level="project" />
+    <orderEntry type="library" name="poi-ooxml-3.13" level="project" />
+    <orderEntry type="library" name="poi-3.13" level="project" />
+    <orderEntry type="library" name="simplecaptcha-1.2.1" level="project" />
+    <orderEntry type="library" name="twilio-0.0.1-jar-with-dependencies" level="project" />
   </component>
 </module>

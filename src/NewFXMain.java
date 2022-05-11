@@ -22,13 +22,15 @@ public class NewFXMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
       //  Parent root =FXMLLoader.load(getClass().getResource("/GUI/frontoffice/ChangerMdp.fxml"));
+//        Parent root =FXMLLoader.load(getClass().getResource("/GUI/HomePageHolder.fxml"));
 
-         Parent root =FXMLLoader.load(getClass().getResource("/GUI/allUsers.fxml"));
+       Parent root =FXMLLoader.load(getClass().getResource("/GUI/frontoffice/Login.fxml"));
+        //      Parent root =FXMLLoader.load(getClass().getResource("/GUI/backoffice/AdminPageHolder.fxml"));
         //   Parent root =FXMLLoader.load(getClass().getResource("/GUI/commentaire/CommentaireistPage.fxml"));
-    // Parent root =FXMLLoader.load(getClass().getResource("/GUI/commentaire/UsersListPage.fxml"));
+//     Parent root =FXMLLoader.load(getClass().getResource("/GUI/commentaire/UsersListPage.fxml"));
         ServiceCommentaire sc =new ServiceCommentaire();
       System.out.println( sc.afficher());
-System.out.println();
+//System.out.println();
         //    Parent root =FXMLLoader.load(getClass().getResource("/GUI/Login.fxml"));
 
             Scene scene = new Scene(root);

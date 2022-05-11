@@ -25,14 +25,14 @@ public class ServiceCommentaire implements IServiceCommentaire<Commentaire> {
     public void ajouter(Commentaire commentaire) {
 
 
-            String query = "INSERT INTO commentaire (produits_id, nom,email, description,rating,created_at) VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO commentaire (produits_id, nom,email, description,rating) VALUES (?, ?, ?, ?, ?);";
             try (PreparedStatement stm = cnx.prepareStatement(query)) {
                stm.setInt(1,commentaire.getIdProduit());
                 stm.setString(2, commentaire.getNomUser());
                 stm.setString(3, commentaire.getEmailUser());
                 stm.setString(4, commentaire.getDescription());
                 stm.setInt(5,commentaire.getRating());
-                stm.setDate(6, MyDb.getSqlDate(commentaire.getCreatedAt()));
+
 
 
                 stm.executeUpdate();

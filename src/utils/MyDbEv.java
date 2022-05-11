@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MyDb {
+public class MyDbEv {
 
-  final   String URL="jdbc:mysql://127.0.0.1:3306/pijava";
+  final   String URL="jdbc:mysql://127.0.0.1:3306/pidev4";
     final String LOGIN="root";
     final String PASSSWORD="";
 
     static private Connection cnx;
-  static  private MyDb instance;
+  static  private MyDbEv instance;
 
-    private   MyDb(){
+    private   MyDbEv(){
 
       try {
         cnx= DriverManager.getConnection(URL,LOGIN,PASSSWORD);
@@ -23,9 +23,9 @@ public class MyDb {
 
       }
     }
-   static public MyDb getInstance(){
+   static public MyDbEv getInstance(){
       if (instance==null)
-      instance= new MyDb();
+      instance= new MyDbEv();
       return instance;
     }
     static public Connection getCnx(){

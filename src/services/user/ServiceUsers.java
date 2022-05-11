@@ -7,6 +7,7 @@ import model.Users;
 import utils.BCrypt;
 import utils.MyDb;
 
+import java.security.MessageDigest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import IServices.user.IServiceUser;
+
+import javax.xml.bind.DatatypeConverter;
 
 public class ServiceUsers implements IServiceUser<Users> {
 
@@ -228,20 +231,22 @@ else System.out.println("Ce nom n'existe pas  ......!");
     
     //---------login----------------------------------------------------
     @Override
-    public boolean Validate_Login(String email , String password){
+    public boolean Validate_Login(String email , String password,String roles){
         Users u=null;
         try {
 
 
 
-            String query = "SELECT * FROM users WHERE email = ? and password = ? and is_deleted=0 ";
+            String query = "SELECT * FROM users WHERE email = ? and roles = ? and password = ? and is_deleted=0 ";
             // Step 2:Create a statement using connection object
             PreparedStatement pS = cnx.prepareStatement(query);
             pS.setString(1, email);
-            pS.setString(2, password);            
+            pS.setString(3, password);
+            pS.setString(2, roles);
             ResultSet resultSet = pS.executeQuery();
             
             if (resultSet.next()) {
+
                 //recuperation d'id de user loged in
                 int ID = resultSet.getInt("id") ;
                 String EMAIL =resultSet.getString("email");
@@ -265,7 +270,7 @@ Boolean ISVERIFIED=resultSet.getBoolean("is_verified");
                    String role =resultSet2.getString("roles");
                    UserSession.getInstance(ID,EMAIL,ROLE,PASSWORD,MOBILE,NOM,PRENOM,ADRESSE,ISVERIFIED);
                 }
-                
+
                 return true;
             }
             
@@ -453,7 +458,8 @@ Users users=null;
     }
     public boolean changerMdp(int idUser, String new_mdp) {
         try {
-            String mdp = BCrypt.hashpw(new_mdp, BCrypt.gensalt(10)).replace("$2a$", "$2y$"); // cost in security.yml
+            //String mdp = BCrypt.hashpw(new_mdp, BCrypt.gensalt(10)).replace("$2a$", "$2y$"); // cost in security.yml
+            String mdp =crypter_password(new_mdp);
 
             String req = "UPDATE users  SET password = ?   WHERE id = '" + idUser + "'";
             ps = cnx.prepareStatement(req);
@@ -490,4 +496,51 @@ Users users=null;
         return ListU;
     }
 
+
+    public String crypter_password(String password) {
+        String hashValue = "";
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            byte[] digestedBytes = messageDigest.digest();
+            hashValue = DatatypeConverter.printHexBinary(digestedBytes).toLowerCase();
+
+        } catch (Exception e) {
+        }
+
+        //   return hashValue;
+        return hashValue;
+    }
+
+    public boolean login(String email, String password){
+
+        try {
+
+            String querry ="SELECT * FROM `users` where email ='"+email+"' and password ='"+password+"'";
+            Statement stm = cnx.createStatement();
+            ResultSet rs= stm.executeQuery(querry);
+
+            if(!rs.isBeforeFirst()){
+                System.out.println("user not found !!!!");
+                return false;
+            }
+            else{
+                System.out.println("user is logged");
+                while(rs.next()){
+                    LoginSession.UID=rs.getInt("id");
+                    LoginSession.Roles=rs.getString("roles");
+                    LoginSession.firstName=rs.getString("nom");
+                    LoginSession.email=rs.getString("email");
+                    LoginSession.password=rs.getString("password");
+                    //LoginSession.avatar=rs.getString("avatar");
+                    LoginSession.IsLogged=true;
+                }
+                System.out.println(LoginSession.firstName+" is connected");
+                return true;
+            }
+        } catch (SQLException ex) {
+            //System.out.println(ex);
+        }
+        return false;
+    }
 }

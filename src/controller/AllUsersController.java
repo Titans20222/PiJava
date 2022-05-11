@@ -31,6 +31,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import model.Users;
 
+//import org.apache.poi.xssf.usermodel.XSSFRow;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import services.StatistiqueService;
 import services.user.ServiceUsers;
 import tray.animations.AnimationType;
@@ -284,63 +287,63 @@ System.out.println(users);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-      /*  btnExport.setOnAction(event -> {
-            String query="SELECT * FROM `users`";
-            try {
-                st= cnx.prepareStatement(query);
-                resultSet=st.executeQuery();
-                XSSFWorkbook wb=new XSSFWorkbook();
-                XSSFSheet sheet =wb.createSheet("Users List ");
-                XSSFRow header = sheet.createRow(0);
-                header.createCell(0).setCellValue("id");
-                header.createCell(1).setCellValue("email");
-                header.createCell(2).setCellValue("roles");
-                header.createCell(3).setCellValue("password");
-                header.createCell(4).setCellValue("mobile");
-                header.createCell(5).setCellValue("nom");
-                header.createCell(6).setCellValue("prenom");
-                header.createCell(7).setCellValue("adresse");
-                int index=1;
-                while (resultSet.next()){
-                    XSSFRow row =sheet.createRow(index);
-                    row.createCell(0).setCellValue(resultSet.getInt("id"));
-                    row.createCell(1).setCellValue(resultSet.getString("email"));
-row.createCell(2).setCellValue(resultSet.getString("roles"));
-
-                  row.createCell(3).setCellValue(resultSet.getString("password"));
-
-                  row.createCell(4).setCellValue(resultSet.getString("mobile"));
-
-                  row.createCell(5).setCellValue(resultSet.getString("nom"));
-   row.createCell(6).setCellValue(resultSet.getString("nom"));
-   row.createCell(7).setCellValue(resultSet.getString("prenom"));
- row.createCell(8).setCellValue(resultSet.getString("adresse"));
-
-
-                        index++;
-
-                    //
-                }
-                FileOutputStream fileOut = new FileOutputStream("usersList.xlsx");
-                wb.write(fileOut);
-                fileOut.close();
-                TrayNotification tray = new TrayNotification();
-                AnimationType type = AnimationType.POPUP;
-
-                tray.setAnimationType(type);
-                tray.setTitle("UPLOAD  SUCCESS");
-                tray.setMessage("Users  Has Exported in excel");
-                tray.setNotificationType(NotificationType.SUCCESS);
-                tray.showAndDismiss(Duration.millis(3000));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });*/
+//        btnExport.setOnAction(event -> {
+//            String query="SELECT * FROM `users`";
+//            try {
+//                st= cnx.prepareStatement(query);
+//                resultSet=st.executeQuery();
+//                XSSFWorkbook wb=new XSSFWorkbook();
+//                XSSFSheet sheet =wb.createSheet("Users List ");
+//                XSSFRow header = sheet.createRow(0);
+//                header.createCell(0).setCellValue("id");
+//                header.createCell(1).setCellValue("email");
+//                header.createCell(2).setCellValue("roles");
+//                header.createCell(3).setCellValue("password");
+//                header.createCell(4).setCellValue("mobile");
+//                header.createCell(5).setCellValue("nom");
+//                header.createCell(6).setCellValue("prenom");
+//                header.createCell(7).setCellValue("adresse");
+//                int index=1;
+//                while (resultSet.next()){
+//                    XSSFRow row =sheet.createRow(index);
+//                    row.createCell(0).setCellValue(resultSet.getInt("id"));
+//                    row.createCell(1).setCellValue(resultSet.getString("email"));
+//row.createCell(2).setCellValue(resultSet.getString("roles"));
+//
+//                  row.createCell(3).setCellValue(resultSet.getString("password"));
+//
+//                  row.createCell(4).setCellValue(resultSet.getString("mobile"));
+//
+//                  row.createCell(5).setCellValue(resultSet.getString("nom"));
+//   row.createCell(6).setCellValue(resultSet.getString("nom"));
+//   row.createCell(7).setCellValue(resultSet.getString("prenom"));
+// row.createCell(8).setCellValue(resultSet.getString("adresse"));
+//
+//
+//                        index++;
+//
+//                    //
+//                }
+//                FileOutputStream fileOut = new FileOutputStream("usersList.xlsx");
+//                wb.write(fileOut);
+//                fileOut.close();
+//                TrayNotification tray = new TrayNotification();
+//                AnimationType type = AnimationType.POPUP;
+//
+//                tray.setAnimationType(type);
+//                tray.setTitle("UPLOAD  SUCCESS");
+//                tray.setMessage("Users  Has Exported in excel");
+//                tray.setNotificationType(NotificationType.SUCCESS);
+//                tray.showAndDismiss(Duration.millis(3000));
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        });
     }
     @FXML
     void mobile(KeyEvent event) {
@@ -360,9 +363,9 @@ event.consume();
         nbrAdmin=sa.getNombreActivatedAccount();
         nbrClient=sa.getNombreUsers();
         ObservableList<PieChart.Data> valueList = FXCollections.observableArrayList(
-                new PieChart.Data("Artisan", nbrArtisan),
-                new PieChart.Data("Client",nbrClient),
-                new PieChart.Data("Admin", nbrAdmin)
+                new PieChart.Data("Disabled", nbrArtisan),
+                new PieChart.Data("Enabled",nbrClient),
+                new PieChart.Data("AllAcount", nbrAdmin)
 
         );
 

@@ -32,8 +32,6 @@ import java.util.logging.Logger;
 public class AdminPageHolderController implements Initializable {
 
     @FXML
-    private Label label;
-    @FXML
     private AnchorPane pageHolder;
     @FXML
     private AnchorPane slider;
@@ -41,6 +39,18 @@ public class AdminPageHolderController implements Initializable {
     private Label time;
 
     private   volatile boolean stop =false;
+    @FXML
+    private AnchorPane produit;
+    @FXML
+    private AnchorPane commande;
+    @FXML
+    private AnchorPane evennement;
+    @FXML
+    private AnchorPane reclamation;
+    @FXML
+    private AnchorPane produit1;
+    @FXML
+    private AnchorPane produit11;
     /**
      * Initializes the controller class.
      */
@@ -68,6 +78,8 @@ public class AdminPageHolderController implements Initializable {
             Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
 
     @FXML
     private void usersPageAction(MouseEvent event) {
@@ -79,6 +91,21 @@ public class AdminPageHolderController implements Initializable {
         pageHolder.getChildren().removeAll(pageHolder.getChildren());
        try {
             pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/allUsers.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+
+    }
+    @FXML
+    private void commentPageAction(MouseEvent event) {
+        TranslateTransition slide = new TranslateTransition();
+        slide.setDuration(Duration.seconds(0.4));
+        slide.setNode(slider);
+        slide.setToY(67);
+        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI/backoffice/commentaire/CommentaireListPage.fxml")));
         } catch (IOException ex) {
             Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
        }
@@ -103,6 +130,101 @@ public class AdminPageHolderController implements Initializable {
             }
         });
         thread.start();
+    }
+
+    @FXML
+    private void produitPageAction(MouseEvent event) {
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/gui_yasmine/gestion_produit/Produit.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+
+    @FXML
+    private void commandePageAction(MouseEvent event) {
+        
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/gui_triki/FXML.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+
+    @FXML
+    private void evennementPageAction(MouseEvent event) {
+        
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/gui_warrad/EvenementFXML.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+
+    @FXML
+    private void reclamationPageAction(MouseEvent event) {
+        
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI_bazdeh/FXMLReclamation.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+
+    @FXML
+    private void categoryPageAction(MouseEvent event) {
+        
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/gui_yasmine/gestion_categorie/Category.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+
+    @FXML
+    private void reponsePageAction(MouseEvent event) {
+        
+//        TranslateTransition slide = new TranslateTransition();
+//        slide.setDuration(Duration.seconds(0.4));
+//        slide.setNode(produit);
+//        slide.setToY(67);
+//        slide.play();
+        pageHolder.getChildren().removeAll(pageHolder.getChildren());
+       try {
+            pageHolder.getChildren().add(FXMLLoader.load(getClass().getResource("/GUI_bazdeh/FXMLReponse.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPageHolderController.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
    
 

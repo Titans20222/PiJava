@@ -10,13 +10,18 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Users;
 import services.user.ServiceUsers;
+import tray.animations.AnimationType;
 import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import utils.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.sun.javafx.css.SizeUnits.EM;
 
 public class ChangerMdpController implements Initializable {
 
@@ -73,7 +78,15 @@ public class ChangerMdpController implements Initializable {
             } else {
                 ServiceUsers us = new ServiceUsers();
                 if (us.changerMdp(u.getId(), password1.getText())) {
-                    Utils.showTrayNotification(NotificationType.NOTICE, "Votre mot de passe est changé", null, null,"", 5000);
+                //    Utils.showTrayNotification(NotificationType.NOTICE, "", null, null,"", 5000);
+                    TrayNotification tray = new TrayNotification();
+                    AnimationType type = AnimationType.POPUP;
+
+                    tray.setAnimationType(type);
+                    tray.setTitle("Changement mot de passe");
+                    tray.setMessage(EM + " Votre mot de passe est changé");
+                    tray.setNotificationType(NotificationType.SUCCESS);
+                    tray.showAndDismiss(Duration.millis(3000));
                 }
                 Stage s = (Stage) annuler.getScene().getWindow();
                 blur.setEffect(null);

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-radius: 1em; -fx-background-color: linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37);" stylesheets="@../../ressources/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminPageHolderController">
+<AnchorPane id="AnchorPane" prefHeight="801.0" prefWidth="1280.0" style="-fx-background-radius: 1em; -fx-background-color: linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37);" stylesheets="@../../ressources/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminPageHolderController">
    <children>
       <AnchorPane fx:id="pageHolder" prefHeight="720.0" prefWidth="1084.0" style="-fx-background-color: #FFFEFB; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0" />
      
@@ -18,7 +18,7 @@
             <Pane layoutX="-1.0" prefHeight="39.0" prefWidth="6.0" style="-fx-background-color: #FFFEFB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <VBox layoutX="18.0" layoutY="136.0" prefHeight="300.0" prefWidth="162.0" spacing="40.0">
+      <VBox layoutX="18.0" layoutY="136.0" prefHeight="435.0" prefWidth="165.0" spacing="40.0">
          <children>
             <AnchorPane onMouseClicked="#dashboardPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
                <children>
@@ -40,6 +40,66 @@
                   <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="produit" layoutX="10.0" layoutY="79.0" onMouseClicked="#produitPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#commentPageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Produit" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="produit1" layoutX="10.0" layoutY="148.0" onMouseClicked="#categoryPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#categoryPageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="category" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="commande" layoutX="10.0" layoutY="148.0" onMouseClicked="#commandePageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#commandePageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="commande" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="evennement" layoutX="10.0" layoutY="217.0" onMouseClicked="#evennementPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#evennementPageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="evennement" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="reclamation" layoutX="10.0" layoutY="286.0" onMouseClicked="#reclamationPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#evennementPageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="reclamation" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="produit11" layoutX="10.0" layoutY="424.0" onMouseClicked="#reponsePageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
+               <children>
+                  <Label layoutX="39.0" onMouseClicked="#commentPageAction" style="-fx-font-size: 20px; -fx-text-fill: #FFFEFB;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="reponse" textFill="#13547a">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+               </children>
+            </AnchorPane>
 
 
 
@@ -52,7 +112,7 @@
          </image>
 
       </ImageView>
-      <Pane layoutX="-3.0" layoutY="505.0" prefHeight="86.0" prefWidth="189.0" style="-fx-background-color: #FFFEFB;">
+      <Pane layoutX="6.0" layoutY="680.0" prefHeight="86.0" prefWidth="189.0" style="-fx-background-color: #FFFEFB;">
          <children>
             <Label fx:id="time" layoutY="15.0" prefHeight="57.0" prefWidth="162.0" text="Time">
                <font>

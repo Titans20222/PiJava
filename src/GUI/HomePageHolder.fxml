@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -95,6 +96,69 @@
             </GridPane>
          </children>
       </AnchorPane>
+
+
+      <VBox alignment="CENTER" layoutX="17.0" layoutY="234.0" prefHeight="283.0" prefWidth="181.0" spacing="15.0">
+         <children>
+            <AnchorPane fx:id="eventSideBar" onMouseClicked="#eventPageAction" prefHeight="46.0" prefWidth="152.0" stylesheets="@../ressources/css/main.css">
+               <children>
+                  <Label layoutX="53.0" layoutY="6.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Events" textFill="#edf2f4">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#edf2f4" glyphName="CALENDAR" layoutX="12.0" layoutY="32.0" size="25" />
+               </children>
+               <styleClass>
+                  <String fx:value="menu" />
+                  <String fx:value="button" />
+               </styleClass>
+            </AnchorPane>
+            <AnchorPane fx:id="produitSideBar" onMouseClicked="#marketPageAction" prefHeight="46.0" prefWidth="152.0" stylesheets="@../ressources/css/main.css">
+               <children>
+                  <Label layoutX="55.0" layoutY="5.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Produits" textFill="#edf2f4">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#edf2f4" glyphName="USER_MD" layoutX="15.0" layoutY="32.0" size="27" />
+               </children>
+               <styleClass>
+                  <String fx:value="menu" />
+                  <String fx:value="button" />
+               </styleClass>
+            </AnchorPane>
+            <AnchorPane fx:id="formationSideBar" prefHeight="46.0" prefWidth="152.0" stylesheets="@../ressources/css/main.css">
+               <children>
+                  <Label layoutX="56.0" layoutY="6.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Formations" textFill="#edf2f4">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#edf2f4" glyphName="STICKY_NOTE" layoutX="16.0" layoutY="33.0" size="25" />
+               </children>
+               <styleClass>
+                  <String fx:value="menu" />
+                  <String fx:value="button" />
+               </styleClass>
+            </AnchorPane>
+            <AnchorPane fx:id="reportsSideBar" prefHeight="46.0" prefWidth="152.0" stylesheets="@../ressources/css/main.css">
+               <children>
+                  <Label layoutX="56.0" layoutY="6.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../ressources/css/main.css" text="Rapport" textFill="#edf2f4">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#edf2f4" glyphName="WRENCH" layoutX="16.0" layoutY="33.0" size="25" />
+               </children>
+               <styleClass>
+                  <String fx:value="menu" />
+                  <String fx:value="button" />
+               </styleClass>
+            </AnchorPane>
+         </children>
+      </VBox>
+
       <AnchorPane fx:id="profileSideBar" layoutX="20.0" layoutY="640.0" onMouseClicked="#profilePageAction" prefHeight="46.0" prefWidth="164.0" stylesheets="@../ressources/css/main.css">
          <styleClass>
             <String fx:value="menu" />

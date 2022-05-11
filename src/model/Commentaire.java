@@ -14,6 +14,13 @@ public class Commentaire {
 
     }
 
+    public Commentaire(int idProduit, String nomUser, String emailUser, String description, int rating) {
+        this.idProduit = idProduit;
+        this.nomUser = nomUser;
+        this.emailUser = emailUser;
+        this.description = description;
+        this.rating = rating;
+    }
 
     public Commentaire(int id, int idProduit, String nomUser, String emailUser, String description, int rating, Date createdAt) {
         this.id = id;

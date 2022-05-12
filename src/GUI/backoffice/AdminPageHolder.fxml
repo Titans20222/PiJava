@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="801.0" prefWidth="1280.0" style="-fx-background-radius: 1em; -fx-background-color: linear-gradient(to right top, #d24646, #d83f42, #de363e, #e32a3b, #e91a37);" stylesheets="@../../ressources/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminPageHolderController">
    <children>
-      <AnchorPane fx:id="pageHolder" prefHeight="720.0" prefWidth="1084.0" style="-fx-background-color: #FFFEFB; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0" />
+      <AnchorPane fx:id="pageHolder" layoutX="237.0" layoutY="90.0" prefHeight="848.0" prefWidth="1033.0" style="-fx-background-color: #FFFEFB; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="90.0">
+         <children>
+            <AnchorPane fx:id="profileSlider" cache="true" cacheHint="SPEED" layoutX="709.0" prefHeight="492.0" prefWidth="310.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 1em 0 1em 1em;">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="111.0" layoutX="113.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/939255.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="userName" alignment="CENTER" layoutX="53.0" layoutY="148.0" prefHeight="34.0" prefWidth="215.0" style="-fx-font-size: 22;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="BRAHIME El HAMED">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userEmail" alignment="CENTER" layoutX="43.0" layoutY="182.0" prefHeight="34.0" prefWidth="236.0" style="-fx-font-size: 16px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="brahime@gmail.com">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#e91a37" glyphName="GEAR" layoutX="239.0" layoutY="31.0" onMouseClicked="#userPorfileAction" size="25" style="-fx-cursor: hand;" />
+                  <FontAwesomeIconView fill="#e91a37" glyphName="ARROW_RIGHT" layoutX="13.0" layoutY="32.0" onMouseClicked="#backAction" size="25" style="-fx-cursor: hand;" />
+                  <GridPane fx:id="taskGrid" layoutX="11.0" layoutY="338.0" prefHeight="154.0" prefWidth="293.0" vgap="15.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
      
-      <AnchorPane fx:id="slider" cache="true" cacheHint="SPEED" layoutX="1.0" layoutY="128.0" prefHeight="48.0" prefWidth="189.0" style="-fx-background-color: rgba(255, 254, 251, 0.2);" AnchorPane.leftAnchor="1.0">
+      <AnchorPane fx:id="slider" cache="true" cacheHint="SPEED" layoutX="1.0" layoutY="128.0" prefHeight="48.0" prefWidth="236.0" style="-fx-background-color: rgba(255, 254, 251, 0.2);" AnchorPane.leftAnchor="1.0">
          <children>
             <Pane layoutX="-1.0" prefHeight="39.0" prefWidth="6.0" style="-fx-background-color: #FFFEFB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="0.0" />
          </children>
@@ -47,7 +83,7 @@
                         <Font name="Century Gothic Bold" size="24.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView fill="#fffefb" glyphName="USERS" layoutX="2.0" layoutY="22.0" size="20" />
+                  <FontAwesomeIconView fill="#fffefb" glyphName="MARKET" layoutX="2.0" layoutY="22.0" size="20" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="produit1" layoutX="10.0" layoutY="148.0" onMouseClicked="#categoryPageAction" prefHeight="29.0" prefWidth="128.0" style="-fx-cursor: hand;">
@@ -112,15 +148,53 @@
          </image>
 
       </ImageView>
-      <Pane layoutX="6.0" layoutY="680.0" prefHeight="86.0" prefWidth="189.0" style="-fx-background-color: #FFFEFB;">
+      <AnchorPane fx:id="profileSideBar" layoutX="14.0" layoutY="741.0" onMouseClicked="#profilePageAction" prefHeight="46.0" prefWidth="164.0" stylesheets="@../../ressources/css/main.css">
+         <styleClass>
+            <String fx:value="menu" />
+            <String fx:value="button" />
+         </styleClass>
          <children>
-            <Label fx:id="time" layoutY="15.0" prefHeight="57.0" prefWidth="162.0" text="Time">
+            <FontAwesomeIconView fill="#edf2f4" glyphName="USER" layoutX="13.0" layoutY="37.0" size="30" />
+            <Label layoutX="54.0" layoutY="7.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Profile" textFill="#edf2f4">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Century Gothic Bold" size="24.0" />
                </font>
             </Label>
          </children>
-      </Pane>
+      </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="675.0" onMouseClicked="#commentPageAction" prefHeight="46.0" prefWidth="164.0" stylesheets="@../../ressources/css/main.css">
+         <styleClass>
+            <String fx:value="menu" />
+            <String fx:value="button" />
+         </styleClass>
+         <children>
+            <FontAwesomeIconView fill="#edf2f4" glyphName="USER" layoutX="13.0" layoutY="37.0" size="30" />
+            <Label layoutX="54.0" layoutY="7.0" style="-fx-font-size: 24px;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="commentaire" textFill="#edf2f4">
+               <font>
+                  <Font name="Century Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1009.0" layoutY="25.0" onMouseClicked="#profileAction" prefHeight="60.0" prefWidth="248.0" style="-fx-background-radius: 1em 0 0 1em;" stylesheets="@../../ressources/css/main.css">
+         <children>
+            <ImageView fitHeight="34.0" fitWidth="33.0" layoutX="169.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/939255.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="userName1" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="155.0" style="-fx-font-size: 20;" styleClass="text" stylesheets="@../../ressources/css/main.css" text="Brahime El Hamed" textFill="#13547a">
+               <font>
+                  <Font name="Century Gothic Bold" size="20.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fill="#e91a37" glyphName="SIGN_OUT" layoutX="218.0" layoutY="41.0" onMouseClicked="#signOutAction" size="30" style="-fx-cursor: hand;" />
+         </children>
+         <styleClass>
+            <String fx:value="profile" />
+            <String fx:value="button" />
+         </styleClass>
+      </AnchorPane>
 
    </children>
 </AnchorPane>

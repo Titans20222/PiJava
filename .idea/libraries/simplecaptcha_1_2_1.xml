@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="simplecaptcha-1.2.1">
     <CLASSES>
-      <root url="jar://G:/lib/simplecaptcha-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../lib/simplecaptcha-1.2.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
